@@ -5,12 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Map;
 
 /**
@@ -44,7 +47,8 @@ public class UserCanReachThePricingPageFromTheHomepageNav {
     public void runs() {
         driver.get(BASE_URL + "/");
         SeleniumResolver.resolve(driver, Map.<String, Object>of("type", "link_text", "value", "Pricing")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains("/pricing"), "Expected URL to contain " + "/pricing" + ", got " + driver.getCurrentUrl());
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+            .until(ExpectedConditions.urlContains("/pricing"));
         Assert.assertTrue(SeleniumResolver.resolve(driver, Map.<String, Object>of("type", "element_role", "role", "heading", "name", "Simple, transparent pricing")).isDisplayed(), "Expected element to be visible: " + Map.<String, Object>of("type", "element_role", "role", "heading", "name", "Simple, transparent pricing"));
     }
 }

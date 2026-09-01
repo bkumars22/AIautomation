@@ -1,0 +1,32 @@
+{
+  "test_name": "SCIP: user can log in and reach the dashboard",
+  "description": "Real-world demonstration against the actual Supply Chain Intelligence Platform app (a separate project, not the framework's own bundled demo site) -- proves the generated code and locator resolution work against a real, independently-built app they were never designed around.",
+  "steps": [
+    {
+      "action": "navigate",
+      "target": { "type": "url", "value": "/login" }
+    },
+    {
+      "action": "fill",
+      "target": { "type": "field_description", "value": "Username" },
+      "value": "demo"
+    },
+    {
+      "action": "fill",
+      "target": { "type": "field_description", "value": "Password" },
+      "value": "Demo@2026"
+    },
+    {
+      "action": "click",
+      "target": { "type": "button_text", "value": "Sign In" }
+    },
+    {
+      "action": "assert_url",
+      "value": "/dashboard"
+    },
+    {
+      "action": "assert_visible",
+      "target": { "type": "page_text", "value": "Welcome back" }
+    }
+  ]
+}

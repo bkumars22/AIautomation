@@ -49,6 +49,7 @@ Run with:  python {filename}
 Target site is read from the TEST_BASE_URL env var (default: http://localhost:8000).
 """
 import os
+import re
 import sys
 
 from playwright.sync_api import sync_playwright, expect
@@ -121,10 +122,12 @@ class PlaywrightAdapter(BaseAdapter):
             return f'    expect(resolve(page, {_py(target)})).to_contain_text({_py(value)})\n'
 
         if action == "assert_url":
-            return (
-                f'    assert {_py(value)} in page.url, '
-                f'"Expected URL to contain " + {_py(value)} + ", got " + page.url\n'
-            )
+            # expect(page).to_have_url(...) polls (default 5s) instead of
+            # checking page.url once -- a real SPA (client-side route change
+            # after an async API call, e.g. React Router post-login) can take
+            # a beat to update the URL, and a one-shot check races that.
+            # Found via this framework's own real-app (SCIP) demonstration.
+            return f'    expect(page).to_have_url(re.compile(re.escape({_py(value)})))\n'
 
         raise ValueError(f"PlaywrightAdapter: unsupported action {action!r}")
 

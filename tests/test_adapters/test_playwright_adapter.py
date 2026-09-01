@@ -74,7 +74,8 @@ class TestCodegen:
 
     def test_assert_url(self, adapter):
         code = adapter.generate(_load_fixture("navigation.json"))
-        assert '"/pricing" in page.url' in code
+        assert "expect(page).to_have_url(re.compile(re.escape(" in code
+        assert '"/pricing"' in code
 
     def test_element_role_target(self, adapter):
         code = adapter.generate(_load_fixture("navigation.json"))

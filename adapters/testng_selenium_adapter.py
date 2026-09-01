@@ -48,12 +48,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Map;
 
 /**
@@ -152,9 +155,14 @@ class TestNGSeleniumAdapter(BaseAdapter):
             )
 
         if action == "assert_url":
+            # WebDriverWait polls (5s) instead of checking getCurrentUrl()
+            # once -- a real SPA (client-side route change after an async
+            # API call, e.g. React Router post-login) can take a beat to
+            # update the URL, and a one-shot check races that. Found via
+            # this framework's own real-app (SCIP) demonstration.
             return (
-                f'        Assert.assertTrue(driver.getCurrentUrl().contains({_java_str(value)}), '
-                f'"Expected URL to contain " + {_java_str(value)} + ", got " + driver.getCurrentUrl());\n'
+                f'        new WebDriverWait(driver, Duration.ofSeconds(5))\n'
+                f'            .until(ExpectedConditions.urlContains({_java_str(value)}));\n'
             )
 
         raise ValueError(f"TestNGSeleniumAdapter: unsupported action {action!r}")

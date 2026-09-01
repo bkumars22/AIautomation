@@ -50,7 +50,8 @@ import os
 import sys
 
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 sys.path.insert(0, {framework_root_json})
 from locator_resolution.selenium_resolver import resolve
@@ -133,9 +134,14 @@ class SeleniumAdapter(BaseAdapter):
             )
 
         if action == "assert_url":
+            # WebDriverWait polls (5s) instead of checking current_url once --
+            # a real SPA (client-side route change after an async API call,
+            # e.g. React Router post-login) can take a beat to update the
+            # URL, and a one-shot check races that. Found via this
+            # framework's own real-app (SCIP) demonstration.
             return (
-                f'    assert {_py(value)} in driver.current_url, '
-                f'"Expected URL to contain " + {_py(value)} + ", got " + driver.current_url\n'
+                f'    WebDriverWait(driver, 5).until(EC.url_contains({_py(value)}), '
+                f'"Expected URL to contain " + {_py(value)} + ", got " + driver.current_url)\n'
             )
 
         raise ValueError(f"SeleniumAdapter: unsupported action {action!r}")

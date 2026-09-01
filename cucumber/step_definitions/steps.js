@@ -71,5 +71,12 @@ Then("the element with test id {string} should show {string}", async function (t
 });
 
 Then("the URL should contain {string}", async function (path) {
-  assert.ok(this.page.url().includes(path), `Expected URL to contain "${path}", got: ${this.page.url()}`);
+  // waitForURL polls (5s) instead of checking page.url() once -- a real SPA
+  // (client-side route change after an async API call, e.g. React Router
+  // post-login) can take a beat to update the URL, and a one-shot check
+  // races that. Found via this framework's own real-app (SCIP) demonstration.
+  await this.page.waitForURL((url) => url.toString().includes(path), { timeout: 5000 })
+    .catch(() => {
+      throw new Error(`Expected URL to contain "${path}", got: ${this.page.url()}`);
+    });
 });

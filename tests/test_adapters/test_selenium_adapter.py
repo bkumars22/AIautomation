@@ -56,7 +56,8 @@ class TestCodegen:
 
     def test_assert_url(self, adapter):
         code = adapter.generate(_load_fixture("navigation.json"))
-        assert '"/pricing" in driver.current_url' in code
+        assert "EC.url_contains(" in code
+        assert '"/pricing"' in code
 
     def test_generated_file_is_valid_python(self, adapter):
         for fixture_name in ["login.json", "form_submission.json", "navigation.json"]:
