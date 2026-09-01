@@ -18,7 +18,17 @@ means writing (and maintaining) N separate implementations. This
 project generates all of them from one source of truth instead — see
 [`docs/architecture.md`](docs/architecture.md) for the full reasoning.
 
-## Quick start
+## Try it live
+
+**[Live code-generation demo](https://bkumars22.github.io/AIautomation/)** —
+a static page (`webshowcase/`), no install, generates real code for all 5
+targets from either an intermediate JSON definition or plain-English
+steps (via a rule-based, no-AI parser that runs entirely in your
+browser — see [Live demo details](#live-demo-webshowcasegithub-pages)
+below for exactly what it can and can't do, and how to embed it on your
+own site).
+
+## Quick start (full local install — live "Run" + reports)
 
 ```bash
 pip install -r requirements.txt && playwright install chromium
@@ -55,12 +65,46 @@ across every affected adapter. Full writeup in
 This is the kind of thing a demo against your own toy site can't catch,
 and exactly why that proof was worth doing.
 
+## Live demo (`webshowcase/`, GitHub Pages)
+
+A fully static site — no backend, no build step — that ports the 5
+adapters' code-generation logic to JavaScript (`webshowcase/adapters.js`,
+mirroring `adapters/*.py` line-for-line in template shape) so it runs
+entirely client-side:
+
+- **Two input modes.** *Plain English*: type steps like a manual test
+  case (`Go to /login.` / `Enter "x" into the email field.` / `Verify
+  that the confirmation banner is visible.`), and a rule-based parser
+  (`webshowcase/parser.js` — **pattern matching, not an LLM**, no API
+  key involved anywhere) converts recognized sentences into the
+  intermediate format. *Intermediate JSON*: paste/edit the format
+  directly, same as the local UI. Every fixture example, including the
+  real SCIP one, can be loaded in either mode.
+- **What it's honest about not doing.** No "Run" button and no real
+  pass/fail results — executing generated Selenium/Playwright/Cypress
+  code means launching a real browser, which is server-side work GitHub
+  Pages architecturally can't do. Unrecognized plain-English lines are
+  reported, never silently dropped or guessed at.
+- **Embedding on your own site:** it's self-contained static files with
+  no external dependencies, so either `<iframe src="https://bkumars22.github.io/AIautomation/">`
+  it directly, or copy the `webshowcase/` folder onto your own host —
+  nothing in it assumes a particular domain.
+- **Deploying it yourself:** `.github/workflows/pages.yml` deploys
+  `webshowcase/` on every push to `main` via the official
+  `actions/deploy-pages` action. The one manual step GitHub requires:
+  repo Settings → Pages → Build and deployment → Source → **GitHub
+  Actions** (can't be done from a workflow file itself).
+
 ## Scope, honestly
 
 Real and tested: Playwright, Selenium, Cypress, TestNG+Java, Cucumber,
 the LangGraph-based requirements→intermediate-format generation
 pipeline (needs `ANTHROPIC_API_KEY`, less battle-tested than the rest —
-see `docs/getting_started.md`), CSV/Excel export, and the FastAPI+JS UI.
+see `docs/getting_started.md`), CSV/Excel export, the FastAPI+JS UI, and
+the static GitHub Pages showcase (`webshowcase/`) including its
+rule-based plain-English parser — verified by round-tripping every
+fixture (including the real SCIP one) from generated manual-case text
+back through the parser with zero unrecognized lines.
 
 Documented as a pattern but **not implemented**: .NET/NUnit/SpecFlow,
 JUnit, Robot Framework, Behave, and any other framework not listed
