@@ -1,10 +1,11 @@
 __pycache__/
 *.pyc
 .pytest_cache/
-generated/
+/generated/
 venv/
 .venv/
 node_modules/
 cypress/screenshots/
 cypress/videos/
 cypress/downloads/
+runners/testng-selenium/target/
