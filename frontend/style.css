@@ -106,3 +106,28 @@ pre {
   font-size: 11.5px;
   max-height: 200px;
 }
+
+button.secondary { background: #374151; }
+
+.scenario-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+}
+.scenario-card h4 { margin: 0 0 8px; font-size: 14px; }
+.scenario-card details { margin-top: 6px; }
+.scenario-card summary { cursor: pointer; font-size: 12.5px; color: var(--accent); }
+
+table#audit-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 13px;
+}
+table#audit-history-table th, table#audit-history-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+table#audit-history-table th { color: var(--text-muted); font-weight: 600; }

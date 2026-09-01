@@ -132,3 +132,117 @@ downloadCsvBtn.addEventListener("click", () => downloadExport("/api/export/csv",
 downloadExcelBtn.addEventListener("click", () => downloadExport("/api/export/excel", "test_report.xlsx"));
 
 loadFixtureList();
+
+// ---------------------------------------------------------------------
+// Document upload, batch generation, and audit history (/api/audit/*).
+// ---------------------------------------------------------------------
+
+const docUploadInput = document.getElementById("doc-upload-input");
+const docUploadFramework = document.getElementById("doc-upload-framework");
+const docUploadBtn = document.getElementById("doc-upload-btn");
+const docUploadStatus = document.getElementById("doc-upload-status");
+const docUploadResults = document.getElementById("doc-upload-results");
+const scenarioListEl = document.getElementById("scenario-list");
+const downloadAllManualBtn = document.getElementById("download-all-manual-btn");
+const downloadAllAutomatedBtn = document.getElementById("download-all-automated-btn");
+const refreshHistoryBtn = document.getElementById("refresh-history-btn");
+const historyTableBody = document.querySelector("#audit-history-table tbody");
+
+let currentSessionId = null;
+
+docUploadBtn.addEventListener("click", async () => {
+  const file = docUploadInput.files[0];
+  if (!file) {
+    docUploadStatus.textContent = "Choose a file first.";
+    return;
+  }
+
+  docUploadStatus.textContent = "Uploading and generating (this calls an LLM, may take a while)...";
+  docUploadResults.hidden = true;
+  currentSessionId = null;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("framework", docUploadFramework.value);
+
+  try {
+    const resp = await fetch("/api/audit/upload", { method: "POST", body: formData });
+    const data = await resp.json();
+    if (!resp.ok) {
+      docUploadStatus.textContent = "Error: " + (data.detail || resp.statusText);
+      return;
+    }
+
+    currentSessionId = data.session_id;
+    renderScenarioList(data.tests);
+    docUploadResults.hidden = false;
+    docUploadStatus.textContent = `Done — ${data.tests.length} scenario(s) found.`;
+    loadAuditHistory();
+  } catch (e) {
+    docUploadStatus.textContent = "Request failed: " + e.message;
+  }
+});
+
+function renderScenarioList(tests) {
+  scenarioListEl.innerHTML = "";
+  for (const test of tests) {
+    const card = document.createElement("div");
+    card.className = "scenario-card";
+    card.innerHTML = `
+      <h4>${escapeHtml(test.scenario_name)}</h4>
+      <details>
+        <summary>Manual test case</summary>
+        <pre>${escapeHtml(test.manual_test_case)}</pre>
+      </details>
+      <details>
+        <summary>Generated code (${escapeHtml(test.framework)})</summary>
+        <pre>${escapeHtml(test.automated_code)}</pre>
+      </details>
+    `;
+    scenarioListEl.appendChild(card);
+  }
+}
+
+downloadAllManualBtn.addEventListener("click", () => {
+  if (currentSessionId == null) return;
+  downloadExport(`/api/audit/download/manual/${currentSessionId}`, "manual_test_cases.docx");
+});
+
+downloadAllAutomatedBtn.addEventListener("click", () => {
+  if (currentSessionId == null) return;
+  downloadExport(`/api/audit/download/automated/${currentSessionId}`, "automated_tests.zip");
+});
+
+async function loadAuditHistory() {
+  try {
+    const resp = await fetch("/api/audit/history");
+    const data = await resp.json();
+    historyTableBody.innerHTML = "";
+    for (const session of data.sessions) {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${escapeHtml(new Date(session.uploaded_at).toLocaleString())}</td>
+        <td>${escapeHtml(session.uploaded_filename)}</td>
+        <td>${escapeHtml(session.framework)}</td>
+        <td>${session.scenario_count}</td>
+        <td><button class="secondary" data-session-id="${session.id}" data-kind="manual">Manual</button>
+            <button class="secondary" data-session-id="${session.id}" data-kind="automated">Automated</button></td>
+      `;
+      historyTableBody.appendChild(row);
+    }
+    historyTableBody.querySelectorAll("button[data-session-id]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-session-id");
+        const kind = btn.getAttribute("data-kind");
+        const filename = kind === "manual" ? "manual_test_cases.docx" : "automated_tests.zip";
+        downloadExport(`/api/audit/download/${kind}/${id}`, filename);
+      });
+    });
+  } catch (e) {
+    docUploadStatus.textContent = "Failed to load audit history: " + e.message;
+  }
+}
+
+refreshHistoryBtn.addEventListener("click", loadAuditHistory);
+
+loadAuditHistory();

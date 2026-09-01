@@ -1,0 +1,52 @@
+PROJECT: E-Commerce Checkout Revamp
+EXPORT DATE: 2026-03-01
+EXPORTED FROM: Jira (CHKT project)
+
+-----------------------------------------------------------------
+CHKT-101: Guest checkout with saved shipping address
+-----------------------------------------------------------------
+Type: Story
+Status: Ready for QA
+
+As a returning guest shopper, I want to check out using a shipping
+address I entered on a previous order, so that I don't have to
+retype it every time.
+
+Acceptance Criteria:
+- On the checkout page, a "Use previous address" checkbox appears
+  if a saved address exists for the guest's email.
+- Checking it fills the address fields and disables manual editing.
+- The order confirmation page shows the used address and an order
+  number.
+
+-----------------------------------------------------------------
+CHKT-104: Apply a promo code at checkout
+-----------------------------------------------------------------
+Type: Story
+Status: Ready for QA
+
+As a shopper, I want to enter a promo code on the checkout page, so
+that my order total reflects any discount I'm entitled to.
+
+Acceptance Criteria:
+- A "Promo code" field and "Apply" button are visible on checkout.
+- Entering a valid code and clicking Apply updates the displayed
+  total and shows a "Promo applied" confirmation message.
+- Entering an invalid code shows an inline error and does not
+  change the total.
+
+-----------------------------------------------------------------
+CHKT-107: Checkout blocked when cart has an out-of-stock item
+-----------------------------------------------------------------
+Type: Story
+Status: Ready for QA
+
+As a shopper, I want to be warned before paying if something in my
+cart just went out of stock, so that I'm not charged for something
+that won't ship.
+
+Acceptance Criteria:
+- If any cart item is out of stock at the time "Place Order" is
+  clicked, checkout does not proceed to payment.
+- An inline warning banner lists the affected item(s) by name.
+- The shopper can remove the affected item and retry checkout.

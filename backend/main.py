@@ -17,7 +17,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -28,6 +28,19 @@ from adapters.playwright_adapter import PlaywrightAdapter
 from adapters.selenium_adapter import SeleniumAdapter
 from adapters.testng_selenium_adapter import TestNGSeleniumAdapter
 from backend.executor import run_generated_test
+from document_upload.audit_db import (
+    get_session,
+    get_sessions,
+    get_tests_for_session,
+    init_db,
+    log_download,
+    log_generated_test,
+    log_session,
+)
+from document_upload.batch_generator import generate_full_test_suite
+from document_upload.downloads import build_automated_code_zip, build_manual_cases_docx
+from document_upload.extractor import UnsupportedFileType, extract_text
+from document_upload.scenario_extractor import ScenarioExtractionError, extract_test_scenarios
 from generation.intermediate_generator import validate_intermediate_definition
 from generation.manual_case_generator import generate_manual_test_case
 from graph.generation_graph import generate_test
@@ -199,6 +212,112 @@ def export_excel():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+# ---------------------------------------------------------------------
+# Document upload, batch generation, and audit history.
+#
+# Namespaced under /api/audit/* -- deliberately distinct from the
+# existing /api/history (which tracks live "Run" results, an unrelated
+# concept) so nothing above this point changes behavior. Each endpoint
+# opens its own SQLite connection via init_db() rather than sharing one
+# on app.state: FastAPI runs sync `def` endpoints in a worker threadpool,
+# and a single sqlite3.Connection isn't safe to reuse across threads.
+# ---------------------------------------------------------------------
+
+@app.post("/api/audit/upload")
+async def upload_document(file: UploadFile = File(...), framework: str = Form(...)):
+    if framework not in _ADAPTERS:
+        raise HTTPException(422, f"framework must be one of {list(_ADAPTERS)}")
+
+    content = await file.read()
+    try:
+        document_text = extract_text(file.filename, content)
+    except UnsupportedFileType as exc:
+        raise HTTPException(400, str(exc))
+
+    try:
+        scenarios = extract_test_scenarios(document_text)
+    except (ScenarioExtractionError, RuntimeError) as exc:
+        raise HTTPException(422, str(exc))
+
+    if not scenarios:
+        raise HTTPException(422, "No testable scenarios were found in this document.")
+
+    results = generate_full_test_suite(scenarios, framework)
+
+    conn = init_db()
+    try:
+        session_id = log_session(conn, file.filename, framework, len(results), "anthropic")
+        tests = [
+            {**result, "id": log_generated_test(conn, session_id, result["scenario_name"], result["manual_test_case"], result["automated_code"])}
+            for result in results
+        ]
+    finally:
+        conn.close()
+
+    return {"session_id": session_id, "tests": tests}
+
+
+@app.get("/api/audit/history")
+def audit_history():
+    conn = init_db()
+    try:
+        return {"sessions": get_sessions(conn)}
+    finally:
+        conn.close()
+
+
+@app.get("/api/audit/sessions/{session_id}")
+def audit_session_detail(session_id: int):
+    conn = init_db()
+    try:
+        session = get_session(conn, session_id)
+        if not session:
+            raise HTTPException(404, f"No session with id {session_id}")
+        return {"session": session, "tests": get_tests_for_session(conn, session_id)}
+    finally:
+        conn.close()
+
+
+@app.get("/api/audit/download/manual/{session_id}")
+def download_manual_cases(session_id: int):
+    conn = init_db()
+    try:
+        tests = get_tests_for_session(conn, session_id)
+        if not tests:
+            raise HTTPException(404, f"No tests found for session {session_id}")
+        docx_bytes = build_manual_cases_docx(tests)
+        for test in tests:
+            log_download(conn, test["id"])
+    finally:
+        conn.close()
+
+    return Response(
+        content=docx_bytes,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": "attachment; filename=manual_test_cases.docx"},
+    )
+
+
+@app.get("/api/audit/download/automated/{session_id}")
+def download_automated_code(session_id: int):
+    conn = init_db()
+    try:
+        tests = get_tests_for_session(conn, session_id)
+        if not tests:
+            raise HTTPException(404, f"No tests found for session {session_id}")
+        zip_bytes = build_automated_code_zip(tests)
+        for test in tests:
+            log_download(conn, test["id"])
+    finally:
+        conn.close()
+
+    return Response(
+        content=zip_bytes,
+        media_type="application/zip",
+        headers={"Content-Disposition": "attachment; filename=automated_tests.zip"},
+    )
 
 
 app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")

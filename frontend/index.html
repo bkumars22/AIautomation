@@ -67,6 +67,48 @@
         <span id="export-status" class="status"></span>
       </div>
     </section>
+
+    <section class="panel">
+      <h2>5. Upload a requirements document</h2>
+      <p class="hint">
+        Upload a Jira story export, business requirements doc, or general requirements (PDF, DOCX,
+        TXT, or MD). An LLM identifies every distinct testable scenario in it and generates a manual
+        test case plus automated code for each one, for the framework you choose below. Needs
+        <code>ANTHROPIC_API_KEY</code> set on the backend process.
+      </p>
+      <div class="row">
+        <input type="file" id="doc-upload-input" accept=".pdf,.docx,.txt,.md">
+        <select id="doc-upload-framework">
+          <option value="playwright">Playwright</option>
+          <option value="selenium">Selenium</option>
+          <option value="cypress">Cypress</option>
+          <option value="testng-selenium">Selenium + TestNG (Java)</option>
+          <option value="cucumber">Cucumber + Playwright</option>
+        </select>
+        <button id="doc-upload-btn">Upload &amp; Generate</button>
+      </div>
+      <span id="doc-upload-status" class="status"></span>
+      <div id="doc-upload-results" hidden>
+        <h3>Generated scenarios</h3>
+        <div id="scenario-list"></div>
+        <div class="row">
+          <button id="download-all-manual-btn" class="secondary">Download All Manual Test Cases (.docx)</button>
+          <button id="download-all-automated-btn" class="secondary">Download All Automated Code (.zip)</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>6. Audit history</h2>
+      <p class="hint">Every document-upload session, persisted locally in SQLite -- survives restarting this server.</p>
+      <button id="refresh-history-btn" class="secondary">Refresh</button>
+      <table id="audit-history-table">
+        <thead>
+          <tr><th>Date</th><th>Source file</th><th>Framework</th><th>Scenarios</th><th>Downloads</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
   </main>
 
   <script src="/static/app.js"></script>

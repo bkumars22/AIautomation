@@ -52,6 +52,7 @@ including how to run TestNG/Cucumber and point this at your own app:
 | [`docs/architecture.md`](docs/architecture.md) | pipeline diagram and the reasoning behind the main design decisions |
 | [`docs/troubleshooting.md`](docs/troubleshooting.md) | every real bug hit while building this, and its fix |
 | [`docs/adding_a_new_language.md`](docs/adding_a_new_language.md) | the extension pattern for .NET, JUnit, Robot Framework, Behave — **documented, not built** |
+| [`docs/document_upload.md`](docs/document_upload.md) | upload a requirements doc, batch-generate a full test suite from it, persistent local audit history |
 
 ## Real-world proof
 
@@ -105,6 +106,13 @@ the static GitHub Pages showcase (`webshowcase/`) including its
 rule-based plain-English parser — verified by round-tripping every
 fixture (including the real SCIP one) from generated manual-case text
 back through the parser with zero unrecognized lines.
+
+Document upload + batch generation + audit history
+(`docs/document_upload.md`) is real and tested at every layer except
+one: scenario-extraction accuracy against real documents needs a live
+`ANTHROPIC_API_KEY`, which wasn't available while building it — see
+that doc's own "what's verified" section for exactly what was and
+wasn't run for real.
 
 Documented as a pattern but **not implemented**: .NET/NUnit/SpecFlow,
 JUnit, Robot Framework, Behave, and any other framework not listed

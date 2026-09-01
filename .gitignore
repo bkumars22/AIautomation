@@ -9,3 +9,4 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 runners/testng-selenium/target/
+/data/
