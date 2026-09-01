@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Log In — Demo Co</title></head>
+<body>
+  <h1>Log In</h1>
+  <form id="login-form">
+    <input aria-label="Email input field" type="email" id="email">
+    <input aria-label="Password input field" type="password" id="password">
+    <button type="submit">Sign In</button>
+  </form>
+  <div id="dashboard" hidden>
+    Dashboard welcome message: you're signed in.
+  </div>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('login-form').hidden = true;
+      document.getElementById('dashboard').hidden = false;
+    });
+  </script>
+</body>
+</html>

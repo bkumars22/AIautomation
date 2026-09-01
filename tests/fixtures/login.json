@@ -1,0 +1,28 @@
+{
+  "test_name": "User can log in with valid credentials",
+  "description": "Verifies a registered user can sign in and reach the dashboard.",
+  "steps": [
+    {
+      "action": "navigate",
+      "target": { "type": "url", "value": "/login" }
+    },
+    {
+      "action": "fill",
+      "target": { "type": "field_description", "value": "email input field" },
+      "value": "test@example.com"
+    },
+    {
+      "action": "fill",
+      "target": { "type": "field_description", "value": "password input field" },
+      "value": "SecurePass123"
+    },
+    {
+      "action": "click",
+      "target": { "type": "button_text", "value": "Sign In" }
+    },
+    {
+      "action": "assert_visible",
+      "target": { "type": "field_description", "value": "dashboard welcome message" }
+    }
+  ]
+}

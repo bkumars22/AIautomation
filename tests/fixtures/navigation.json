@@ -1,0 +1,22 @@
+{
+  "test_name": "User can reach the pricing page from the homepage nav",
+  "description": "Verifies the top nav's Pricing link lands on the correct URL and renders the pricing heading.",
+  "steps": [
+    {
+      "action": "navigate",
+      "target": { "type": "url", "value": "/" }
+    },
+    {
+      "action": "click",
+      "target": { "type": "link_text", "value": "Pricing" }
+    },
+    {
+      "action": "assert_url",
+      "value": "/pricing"
+    },
+    {
+      "action": "assert_visible",
+      "target": { "type": "element_role", "role": "heading", "name": "Simple, transparent pricing" }
+    }
+  ]
+}

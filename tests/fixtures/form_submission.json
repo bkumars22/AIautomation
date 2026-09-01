@@ -1,0 +1,38 @@
+{
+  "test_name": "User can submit the contact form with a subject and consent",
+  "description": "Verifies the contact form accepts a message, a selected subject, and a required consent checkbox, then shows a confirmation.",
+  "steps": [
+    {
+      "action": "navigate",
+      "target": { "type": "url", "value": "/contact" }
+    },
+    {
+      "action": "fill",
+      "target": { "type": "field_description", "value": "full name input field" },
+      "value": "Jordan Lee"
+    },
+    {
+      "action": "fill",
+      "target": { "type": "field_description", "value": "message textarea" },
+      "value": "I'd like a demo of the enterprise plan."
+    },
+    {
+      "action": "select",
+      "target": { "type": "dropdown_description", "value": "subject dropdown" },
+      "value": "Sales"
+    },
+    {
+      "action": "check",
+      "target": { "type": "checkbox_description", "value": "I agree to be contacted" }
+    },
+    {
+      "action": "click",
+      "target": { "type": "element_role", "role": "button", "name": "Send Message" }
+    },
+    {
+      "action": "assert_text",
+      "target": { "type": "page_text", "value": "confirmation banner", "hint": { "test_id": "confirmation-banner" } },
+      "value": "Thanks - we'll be in touch shortly."
+    }
+  ]
+}

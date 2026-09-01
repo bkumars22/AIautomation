@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Contact — Demo Co</title></head>
+<body>
+  <h1>Contact us</h1>
+  <form id="contact-form">
+    <input aria-label="Full name input field" id="name">
+    <textarea aria-label="Message textarea" id="message"></textarea>
+    <select aria-label="Subject dropdown" id="subject">
+      <option value="">Choose one</option>
+      <option value="sales">Sales</option>
+      <option value="support">Support</option>
+    </select>
+    <label>
+      <input type="checkbox" id="consent">
+      I agree to be contacted
+    </label>
+    <button type="submit">Send Message</button>
+  </form>
+  <div data-testid="confirmation-banner" hidden>
+    Thanks - we'll be in touch shortly.
+  </div>
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('contact-form').hidden = true;
+      document.querySelector('[data-testid="confirmation-banner"]').hidden = false;
+    });
+  </script>
+</body>
+</html>
