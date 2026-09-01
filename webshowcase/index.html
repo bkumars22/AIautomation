@@ -4,28 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Universal Test Framework</title>
-  <meta name="description" content="One intermediate test definition, generated as real Playwright, Selenium, Cypress, TestNG, or Cucumber code. Live code-generation demo.">
+  <meta name="description" content="Describe a test flow once and generate real, runnable Playwright, Selenium, Cypress, TestNG, or Cucumber code — a Chaitrishodaya project.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <span class="badge">Live code-generation demo</span>
+    <div class="brand">Chaitrishodaya</div>
     <h1>Universal Test Framework</h1>
-    <p class="subtitle">Describe a test flow once, in one tool-agnostic JSON format, and generate real, runnable
-      Playwright, Selenium, Cypress, TestNG (Java), or Cucumber code — right in this page, no install required.</p>
-    <a class="repo-link" href="https://github.com/bkumars22/AIautomation" target="_blank" rel="noopener">View source &amp; run it for real on GitHub &rarr;</a>
+    <p class="subtitle">Describe a test flow once, and generate real, runnable
+      Playwright, Selenium, Cypress, TestNG, or Cucumber code — right in this page, no install required.</p>
   </header>
 
   <main>
     <section class="panel">
-      <div class="real-world-callout">
+      <div class="section-head-row">
+        <h2>1. Describe a test</h2>
+        <button type="button" id="help-icon-btn" class="help-icon" aria-label="About the real-world example" title="About the real-world example">i</button>
+      </div>
+      <div id="help-popover" class="popover" hidden>
         <strong>This isn't just a toy demo.</strong> The starred example below is the exact test that runs
         against a real, independently-built production app (Supply Chain Intelligence Platform) —
         not this project's own sandbox. Running it there caught a genuine bug (a race between a URL
         assertion and a Single Page App's async navigation), now fixed in every generated adapter.
-        See <a href="https://github.com/bkumars22/AIautomation/blob/main/docs/troubleshooting.md" target="_blank" rel="noopener">docs/troubleshooting.md</a> for the full writeup.
       </div>
-      <h2>1. Describe a test</h2>
       <div class="row tool-row" id="mode-row">
         <label><input type="radio" name="input-mode" value="plain" checked> Plain English</label>
         <label><input type="radio" name="input-mode" value="json"> Intermediate JSON</label>
@@ -41,8 +42,7 @@
       </p>
       <ul id="phrasings-list" class="hint" hidden></ul>
       <p class="hint" id="json-hint" hidden>
-        Or write the intermediate test definition directly — see
-        <a href="https://github.com/bkumars22/AIautomation/blob/main/docs/intermediate_format.md" target="_blank" rel="noopener">docs/intermediate_format.md</a> for the format.
+        Or write the intermediate test definition directly, in JSON.
       </p>
       <textarea id="input-text" rows="14" spellcheck="false"></textarea>
       <div id="parse-preview" hidden>
@@ -78,18 +78,12 @@
           <pre id="generated-code"></pre>
         </div>
       </div>
-      <div class="no-run-note">
-        This page generates real code but can't execute it — running a browser to actually drive
-        Playwright/Selenium/Cypress/TestNG/Cucumber needs a server, which GitHub Pages doesn't provide.
-        Clone the repo and follow
-        <a href="https://github.com/bkumars22/AIautomation/blob/main/docs/getting_started.md" target="_blank" rel="noopener">docs/getting_started.md</a>
-        to run this exact code (or spin up the included local UI, which does run and report real PASS/FAIL results).
-      </div>
     </section>
   </main>
 
   <footer>
-    Universal Test Framework — <a href="https://github.com/bkumars22/AIautomation" target="_blank" rel="noopener">source on GitHub</a>
+    Universal Test Framework — a Chaitrishodaya project. For further details, contact
+    <a href="https://chaitrishodaya.com/" target="_blank" rel="noopener">chaitrishodaya.com</a>.
   </footer>
 
   <script type="module" src="app.js"></script>

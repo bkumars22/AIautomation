@@ -18,8 +18,14 @@ const phrasingsList = document.getElementById("phrasings-list");
 const parsePreview = document.getElementById("parse-preview");
 const parsedJsonEl = document.getElementById("parsed-json");
 const skippedLinesEl = document.getElementById("skipped-lines");
+const helpIconBtn = document.getElementById("help-icon-btn");
+const helpPopover = document.getElementById("help-popover");
 
 let lastGenerated = null; // { code, filename }
+
+helpIconBtn.addEventListener("click", () => {
+  helpPopover.hidden = !helpPopover.hidden;
+});
 
 for (const fixture of FIXTURES) {
   const option = document.createElement("option");
