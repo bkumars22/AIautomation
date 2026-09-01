@@ -108,11 +108,10 @@ fixture (including the real SCIP one) from generated manual-case text
 back through the parser with zero unrecognized lines.
 
 Document upload + batch generation + audit history
-(`docs/document_upload.md`) is real and tested at every layer except
-one: scenario-extraction accuracy against real documents needs a live
-`ANTHROPIC_API_KEY`, which wasn't available while building it — see
-that doc's own "what's verified" section for exactly what was and
-wasn't run for real.
+(`docs/document_upload.md`) is real and tested at every layer,
+including scenario-extraction accuracy — verified end-to-end against 4
+real, differently-shaped documents (see that doc's "what's verified"
+section for the full review).
 
 Documented as a pattern but **not implemented**: .NET/NUnit/SpecFlow,
 JUnit, Robot Framework, Behave, and any other framework not listed

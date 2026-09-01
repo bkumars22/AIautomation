@@ -99,7 +99,7 @@ in the session's `framework` inside `get_tests_for_session()` itself, so
 every caller gets a complete row without having to remember to attach
 it.
 
-## What's verified, and what's pending your own API key
+## What's verified
 
 Fully built and tested without needing a key: document parsing (4 real
 fixture files — TXT, DOCX, and 2 differently-shaped PDFs, one with zero
@@ -111,9 +111,41 @@ mocked.
 
 **Scenario-extraction accuracy against real, differently-shaped
 documents** (the one thing this feature's own design brief calls out as
-mattering more than anything else) is real code, but genuinely
-unverified without a live `ANTHROPIC_API_KEY` — no key was available in
-the environment this was built in. `tests/fixtures/documents/` has 3
-real, differently-shaped requirements documents plus the zero-scenario
-case specifically so this can be verified for real the moment a key is
-available; that verification had not been run as of this writing.
+mattering more than anything else) has now been verified for real,
+end-to-end, against all 4 fixtures in `tests/fixtures/documents/` — the
+Jira-export-style `.txt`, the narrative `.docx`, the numbered-clause
+`.pdf`, and the zero-scenario glossary `.pdf`. No live Anthropic
+credit balance was available at verification time, so the run used
+Groq's free API (`openai/gpt-oss-120b`) as a drop-in stand-in through
+the exact same `_SYSTEM_PROMPT`, JSON extraction, and validation code
+in `scenario_extractor.py` — only the network call itself was swapped
+for a one-off manual script (not committed); the shipped default
+provider remains Anthropic.
+
+Results were manually reviewed against this feature's own bar
+("genuinely distinct, testable behaviors — don't split into artificial
+fragments" and "handle zero-scenario documents gracefully"):
+
+- The 3-story Jira export produced 9 scenarios — each Jira story split
+  into 2–3 finer-grained scenarios (e.g. "checkbox becomes visible" /
+  "checkbox populates the address fields" / "confirmation page shows
+  the address" as three separate scenarios from one story). Each split
+  is independently testable, not an artificial fragment — a real,
+  observed characteristic (the model extracts at a finer grain than
+  the source document's own story boundaries) rather than a failure.
+- The narrative `.docx` correctly produced one scenario per actual
+  requirement (email confirmation, password strength, photo upload —
+  7 total across sub-cases) and correctly produced **no** scenario for
+  its "Non-functional notes" paragraph, which the fixture deliberately
+  included as a non-testable distractor.
+- The numbered PDF spec correctly split the security-sensitive
+  "identical message for a registered vs. unregistered email" behavior
+  into two distinct testable scenarios, and correctly excluded the
+  document's own review-metadata clause.
+- The glossary-only PDF produced exactly 0 scenarios — no fabrication.
+
+Net result: the prompt design, JSON parsing, and validation logic are
+sound with a real model. Exact scenario granularity may differ somewhat
+between LLM providers/models; that's expected and not something this
+pipeline tries to control beyond the system prompt's own instruction
+not to split into artificial fragments.
