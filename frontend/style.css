@@ -1,0 +1,108 @@
+:root {
+  --border: #d0d5dd;
+  --bg: #f8f9fb;
+  --accent: #2563eb;
+  --text-muted: #667085;
+  --pass: #15803d;
+  --fail: #dc2626;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: #1a1a2e;
+}
+
+header {
+  padding: 24px 32px;
+  background: #111827;
+  color: #fff;
+}
+
+header h1 { margin: 0; font-size: 22px; }
+.subtitle { margin: 4px 0 0; color: #9ca3af; font-size: 13px; }
+
+main {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+}
+
+.panel h2 { margin: 0 0 14px; font-size: 16px; }
+.panel h3 { margin: 0 0 8px; font-size: 13px; color: var(--text-muted); text-transform: uppercase; }
+
+.row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.tool-row label { font-size: 14px; margin-right: 4px; }
+
+select, button, textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+button:hover { opacity: 0.9; }
+
+.hint { font-size: 12px; color: var(--text-muted); margin: 4px 0 8px; }
+
+textarea, pre {
+  width: 100%;
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  font-size: 12.5px;
+}
+
+textarea { resize: vertical; }
+
+pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 14px;
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 400px;
+}
+
+.manual-case { background: #f0fdf4; color: #14532d; }
+
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+
+.status { margin-left: 10px; font-size: 13px; color: var(--text-muted); }
+
+.run-result {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.run-result.passed { background: #f0fdf4; color: var(--pass); border-color: #bbf7d0; }
+.run-result.failed { background: #fef2f2; color: var(--fail); border-color: #fecaca; }
+.run-result pre {
+  margin-top: 8px;
+  background: rgba(0,0,0,0.05);
+  color: inherit;
+  font-size: 11.5px;
+  max-height: 200px;
+}

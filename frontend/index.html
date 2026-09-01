@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Universal Test Framework</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Universal Test Framework</h1>
+    <p class="subtitle">One intermediate test definition &rarr; runnable Playwright, Selenium, Cypress, TestNG, or Cucumber code.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>1. Start from an example</h2>
+      <div class="row">
+        <select id="fixture-select">
+          <option value="">-- choose an example --</option>
+        </select>
+        <button id="load-fixture-btn">Load</button>
+      </div>
+      <p class="hint">Or write your own intermediate JSON directly below (see docs/intermediate_format.md).</p>
+      <textarea id="intermediate-json" rows="14" spellcheck="false" placeholder='{"test_name": "...", "steps": [...]}'></textarea>
+    </section>
+
+    <section class="panel">
+      <h2>2. Choose a framework</h2>
+      <div class="row tool-row">
+        <label><input type="radio" name="tool" value="playwright" checked> Playwright (Python)</label>
+        <label><input type="radio" name="tool" value="selenium"> Selenium (Python)</label>
+        <label><input type="radio" name="tool" value="cypress"> Cypress (JS)</label>
+        <label><input type="radio" name="tool" value="testng-selenium"> Selenium + TestNG (Java)</label>
+        <label><input type="radio" name="tool" value="cucumber"> Cucumber + Playwright (Gherkin)</label>
+      </div>
+      <button id="generate-btn">Generate code</button>
+      <span id="generate-status" class="status"></span>
+    </section>
+
+    <section class="panel" id="output-panel" hidden>
+      <h2>3. Generated output</h2>
+      <div class="columns">
+        <div>
+          <h3>Manual test case</h3>
+          <pre id="manual-case" class="manual-case"></pre>
+        </div>
+        <div>
+          <h3>Generated code</h3>
+          <pre id="generated-code" class="code"></pre>
+        </div>
+      </div>
+      <button id="run-btn">Run against the bundled demo site</button>
+      <span id="run-status" class="status"></span>
+      <p id="run-unsupported" class="hint" hidden>
+        TestNG and Cucumber run through their own toolchain (Maven / cucumber-js), not this
+        in-browser runner -- see docs/getting_started.md for the exact commands.
+      </p>
+      <div id="run-result" class="run-result" hidden></div>
+    </section>
+
+    <section class="panel">
+      <h2>4. Reports</h2>
+      <p class="hint">Every test you run against the demo site is added to this session's report.</p>
+      <div class="row">
+        <button id="download-csv-btn">Download CSV</button>
+        <button id="download-excel-btn">Download Excel</button>
+        <span id="export-status" class="status"></span>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
