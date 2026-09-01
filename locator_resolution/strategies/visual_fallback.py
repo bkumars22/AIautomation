@@ -20,10 +20,42 @@ from __future__ import annotations
 
 import tempfile
 from pathlib import Path
+from typing import Any
 
 import cv2
 
 from locator_resolution.base import LocatorStrategy
+
+
+def match_template(screenshot_path: str, reference_image_path: str, confidence_threshold: float = 0.8) -> dict[str, Any] | None:
+    """
+    Core OpenCV template-matching logic, factored out so both
+    VisualFallbackStrategy (Selenium, in-process) and
+    scripts/visual_match_cli.py (shelled out to from the Cypress adapter's
+    Node task — see cypress.config.js — since Node has no OpenCV binding
+    as simple/mature as Python's) call the exact same matching code
+    instead of two parallel reimplementations.
+
+    Returns the matched region's center point + confidence, or None if
+    nothing matched above the threshold.
+    """
+    full_page = cv2.imread(screenshot_path, cv2.IMREAD_GRAYSCALE)
+    reference = cv2.imread(reference_image_path, cv2.IMREAD_GRAYSCALE)
+    if full_page is None or reference is None:
+        return None
+
+    result = cv2.matchTemplate(full_page, reference, cv2.TM_CCOEFF_NORMED)
+    _min_val, max_val, _min_loc, max_loc = cv2.minMaxLoc(result)
+
+    if max_val < confidence_threshold:
+        return None
+
+    ref_height, ref_width = reference.shape
+    return {
+        "center_x": max_loc[0] + ref_width // 2,
+        "center_y": max_loc[1] + ref_height // 2,
+        "confidence": round(float(max_val), 4),
+    }
 
 
 class VisualFallbackStrategy(LocatorStrategy):
@@ -42,23 +74,11 @@ class VisualFallbackStrategy(LocatorStrategy):
             screenshot_path = str(Path(tmp) / "full_page.png")
             driver.save_screenshot(screenshot_path)
 
-            full_page = cv2.imread(screenshot_path, cv2.IMREAD_GRAYSCALE)
-            reference = cv2.imread(reference_image_path, cv2.IMREAD_GRAYSCALE)
-            if full_page is None or reference is None:
+            match = match_template(screenshot_path, reference_image_path, self.confidence_threshold)
+            if match is None:
                 return None
 
-            result = cv2.matchTemplate(full_page, reference, cv2.TM_CCOEFF_NORMED)
-            _min_val, max_val, _min_loc, max_loc = cv2.minMaxLoc(result)
-
-            if max_val < self.confidence_threshold:
-                return None
-
-            ref_height, ref_width = reference.shape
-            center_x = max_loc[0] + ref_width // 2
-            center_y = max_loc[1] + ref_height // 2
-
-            element = driver.execute_script(
+            return driver.execute_script(
                 "return document.elementFromPoint(arguments[0], arguments[1]);",
-                center_x, center_y,
+                match["center_x"], match["center_y"],
             )
-            return element

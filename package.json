@@ -1,0 +1,15 @@
+{
+  "name": "universal-test-framework",
+  "version": "1.0.0",
+  "description": "Tool-agnostic AI test automation framework — one intermediate test definition, adapters for Playwright, Selenium, and Cypress.",
+  "scripts": {
+    "cypress:run": "cypress run --spec \"generated/**/*.cy.js\""
+  },
+  "keywords": ["testing", "playwright", "selenium", "cypress", "test-generation"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "cypress": "^15.21.1"
+  }
+}
