@@ -5,11 +5,19 @@
   "scripts": {
     "cypress:run": "cypress run --spec \"generated/**/*.cy.js\""
   },
-  "keywords": ["testing", "playwright", "selenium", "cypress", "test-generation"],
+  "keywords": [
+    "testing",
+    "playwright",
+    "selenium",
+    "cypress",
+    "test-generation"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "cypress": "^15.21.1"
+    "@cucumber/cucumber": "^13.2.1",
+    "cypress": "^15.21.1",
+    "playwright": "^1.62.1"
   }
 }
