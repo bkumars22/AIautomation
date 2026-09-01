@@ -1,0 +1,431 @@
+
+Warning: The allowCypressEnv configuration option is enabled. This allows any browser code to read values from Cypress.env(). This is insecure and will be removed in a future major version.
+
+1. Replace Cypress.env() calls with cy.env() (for sensitive values) or Cypress.expose() (for public configuration)
+2. Set allowCypressEnv: false in your Cypress configuration to disable Cypress.env()
+
+Learn more: https://on.cypress.io/cypress-env-migration
+
+
+====================================================================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:        15.21.1                                                                        │
+  │ Browser:        Electron 138 (headless)                                                        │
+  │ Node Version:   v24.16.0 (C:\Program Files\nodejs\node.exe)                                    │
+  │ Specs:          1 found (test_user_can_log_in_with_valid_credentials.cy.js)                    │
+  │ Searched:       D:\KumarFolder\mydocs\universal-test-framework\generated\test_user_can_log_in_ │
+  │                 with_valid_credentials.cy.js                                                   │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  test_user_can_log_in_with_valid_credentials.cy.js                               (1 of 1)
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-09-01T02:18:13.861Z",
+    "end": "2026-09-01T02:18:14.566Z",
+    "duration": 705
+  },
+  "tests": [
+    {
+      "title": "runs",
+      "fullTitle": "User can log in with valid credentials runs",
+      "file": null,
+      "duration": 619,
+      "currentRetry": 0,
+      "err": {
+        "message": "`cy.visit()` failed trying to load:\n\nhttp://127.0.0.1:63594/nonexistent-path-that-breaks-it/login\n\nThe response we received from your web server was:\n\n  > 404: Not Found\n\nThis was considered a failure because the status code was not `2xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`",
+        "name": "CypressError",
+        "stack": "CypressError: `cy.visit()` failed trying to load:\n\nhttp://127.0.0.1:63594/nonexistent-path-that-breaks-it/login\n\nThe response we received from your web server was:\n\n  > 404: Not Found\n\nThis was considered a failure because the status code was not `2xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n    at <unknown> (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:133553:76)\n    at visitFailedByErr (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:133143:12)\n    at <unknown> (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:133536:13)\n    at tryCatcher (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1670:18)\n    at _drainQueueStep (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:2380:12)\n    at _drainQueue (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:2373:9)\n    at Async._drainQueues (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:2389:5)\n    at Async.drainQueues (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:2259:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://universal-test-framework/./generated/test_user_can_log_in_with_valid_credentials.cy.js:12:7)",
+        "parsedStack": [
+          {
+            "message": "CypressError: `cy.visit()` failed trying to load:",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "http://127.0.0.1:63594/nonexistent-path-that-breaks-it/login",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "The response we received from your web server was:",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "> 404: Not Found",
+            "whitespace": "  "
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "This was considered a failure because the status code was not `2xx`.",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`",
+            "whitespace": ""
+          },
+          {
+            "function": "<unknown>",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 133553,
+            "column": 76,
+            "whitespace": "    "
+          },
+          {
+            "function": "visitFailedByErr",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 133143,
+            "column": 12,
+            "whitespace": "    "
+          },
+          {
+            "function": "<unknown>",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 133536,
+            "column": 13,
+            "whitespace": "    "
+          },
+          {
+            "function": "tryCatcher",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1780,
+            "column": 23,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromiseFromHandler",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1492,
+            "column": 31,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromise",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1549,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromise0",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1594,
+            "column": 10,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromises",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1670,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "_drainQueueStep",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 2380,
+            "column": 12,
+            "whitespace": "    "
+          },
+          {
+            "function": "_drainQueue",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 2373,
+            "column": 9,
+            "whitespace": "    "
+          },
+          {
+            "function": "Async._drainQueues",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 2389,
+            "column": 5,
+            "whitespace": "    "
+          },
+          {
+            "function": "Async.drainQueues",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 2259,
+            "column": 14,
+            "whitespace": "    "
+          },
+          {
+            "message": "From Your Spec Code:",
+            "whitespace": ""
+          },
+          {
+            "function": "Context.eval",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/tests?p=generated\\test_user_can_log_in_with_valid_credentials.cy.js",
+            "originalFile": "webpack://universal-test-framework/./generated/test_user_can_log_in_with_valid_credentials.cy.js",
+            "relativeFile": "generated/test_user_can_log_in_with_valid_credentials.cy.js",
+            "absoluteFile": "D:/KumarFolder/mydocs/universal-test-framework/generated/test_user_can_log_in_with_valid_credentials.cy.js",
+            "line": 12,
+            "column": 7,
+            "whitespace": "    "
+          }
+        ],
+        "codeFrame": {
+          "line": 12,
+          "column": 8,
+          "originalFile": "generated/test_user_can_log_in_with_valid_credentials.cy.js",
+          "relativeFile": "generated/test_user_can_log_in_with_valid_credentials.cy.js",
+          "absoluteFile": "D:/KumarFolder/mydocs/universal-test-framework/generated/test_user_can_log_in_with_valid_credentials.cy.js",
+          "frame": "  10 | describe(\"User can log in with valid credentials\", () => {\n  11 |   it(\"runs\", () => {\n> 12 |     cy.visit(\"/login\");\n     |        ^\n  13 |     cy.resolveTarget({\"type\": \"field_description\", \"value\": \"email input field\"}).clear().type(\"test@example.com\");\n  14 |     cy.resolveTarget({\"type\": \"field_description\", \"value\": \"password input field\"}).clear().type(\"SecurePass123\");\n  15 |     cy.resolveTarget({\"type\": \"button_text\", \"value\": \"Sign In\"}).click();",
+          "language": "js"
+        }
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "runs",
+      "fullTitle": "User can log in with valid credentials runs",
+      "file": null,
+      "currentRetry": 0,
+      "err": {
+        "message": "`cy.visit()` failed trying to load:\n\nhttp://127.0.0.1:63594/nonexistent-path-that-breaks-it/login\n\nThe response we received from your web server was:\n\n  > 404: Not Found\n\nThis was considered a failure because the status code was not `2xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`",
+        "name": "CypressError",
+        "stack": "CypressError: `cy.visit()` failed trying to load:\n\nhttp://127.0.0.1:63594/nonexistent-path-that-breaks-it/login\n\nThe response we received from your web server was:\n\n  > 404: Not Found\n\nThis was considered a failure because the status code was not `2xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n    at <unknown> (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:133553:76)\n    at visitFailedByErr (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:133143:12)\n    at <unknown> (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:133536:13)\n    at tryCatcher (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:1670:18)\n    at _drainQueueStep (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:2380:12)\n    at _drainQueue (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:2373:9)\n    at Async._drainQueues (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:2389:5)\n    at Async.drainQueues (http://127.0.0.1:63594/__cypress/runner/cypress_runner.js:2259:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://universal-test-framework/./generated/test_user_can_log_in_with_valid_credentials.cy.js:12:7)",
+        "parsedStack": [
+          {
+            "message": "CypressError: `cy.visit()` failed trying to load:",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "http://127.0.0.1:63594/nonexistent-path-that-breaks-it/login",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "The response we received from your web server was:",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "> 404: Not Found",
+            "whitespace": "  "
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "This was considered a failure because the status code was not `2xx`.",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`",
+            "whitespace": ""
+          },
+          {
+            "function": "<unknown>",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 133553,
+            "column": 76,
+            "whitespace": "    "
+          },
+          {
+            "function": "visitFailedByErr",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 133143,
+            "column": 12,
+            "whitespace": "    "
+          },
+          {
+            "function": "<unknown>",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 133536,
+            "column": 13,
+            "whitespace": "    "
+          },
+          {
+            "function": "tryCatcher",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1780,
+            "column": 23,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromiseFromHandler",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1492,
+            "column": 31,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromise",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1549,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromise0",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1594,
+            "column": 10,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromises",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 1670,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "_drainQueueStep",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 2380,
+            "column": 12,
+            "whitespace": "    "
+          },
+          {
+            "function": "_drainQueue",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 2373,
+            "column": 9,
+            "whitespace": "    "
+          },
+          {
+            "function": "Async._drainQueues",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 2389,
+            "column": 5,
+            "whitespace": "    "
+          },
+          {
+            "function": "Async.drainQueues",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "originalFile": "http://127.0.0.1:63594/__cypress/runner/cypress_runner.js",
+            "line": 2259,
+            "column": 14,
+            "whitespace": "    "
+          },
+          {
+            "message": "From Your Spec Code:",
+            "whitespace": ""
+          },
+          {
+            "function": "Context.eval",
+            "fileUrl": "http://127.0.0.1:63594/__cypress/tests?p=generated\\test_user_can_log_in_with_valid_credentials.cy.js",
+            "originalFile": "webpack://universal-test-framework/./generated/test_user_can_log_in_with_valid_credentials.cy.js",
+            "relativeFile": "generated/test_user_can_log_in_with_valid_credentials.cy.js",
+            "absoluteFile": "D:/KumarFolder/mydocs/universal-test-framework/generated/test_user_can_log_in_with_valid_credentials.cy.js",
+            "line": 12,
+            "column": 7,
+            "whitespace": "    "
+          }
+        ],
+        "codeFrame": {
+          "line": 12,
+          "column": 8,
+          "originalFile": "generated/test_user_can_log_in_with_valid_credentials.cy.js",
+          "relativeFile": "generated/test_user_can_log_in_with_valid_credentials.cy.js",
+          "absoluteFile": "D:/KumarFolder/mydocs/universal-test-framework/generated/test_user_can_log_in_with_valid_credentials.cy.js",
+          "frame": "  10 | describe(\"User can log in with valid credentials\", () => {\n  11 |   it(\"runs\", () => {\n> 12 |     cy.visit(\"/login\");\n     |        ^\n  13 |     cy.resolveTarget({\"type\": \"field_description\", \"value\": \"email input field\"}).clear().type(\"test@example.com\");\n  14 |     cy.resolveTarget({\"type\": \"field_description\", \"value\": \"password input field\"}).clear().type(\"SecurePass123\");\n  15 |     cy.resolveTarget({\"type\": \"button_text\", \"value\": \"Sign In\"}).click();",
+          "language": "js"
+        }
+      }
+    }
+  ],
+  "passes": []
+}
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        1                                                                                │
+  │ Passing:      0                                                                                │
+  │ Failing:      1                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  1                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     0 seconds                                                                        │
+  │ Spec Ran:     test_user_can_log_in_with_valid_credentials.cy.js                                │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  D:\KumarFolder\mydocs\universal-test-framework\cypress\screenshots\test_user_can     (1280x720)
+     _log_in_with_valid_credentials.cy.js\User can log in with valid credentials -- r               
+     uns (failed).png                                                                               
+
+
+====================================================================================================
+
+  (Run Finished)
+
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped  
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ✖  test_user_can_log_in_with_valid_cre      708ms        1        -        1        -        - │
+  │    dentials.cy.js                                                                              │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    ✖  1 of 1 failed (100%)                     708ms        1        -        1        -        -  
+

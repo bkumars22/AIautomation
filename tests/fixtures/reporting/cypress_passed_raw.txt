@@ -1,0 +1,87 @@
+
+Warning: The allowCypressEnv configuration option is enabled. This allows any browser code to read values from Cypress.env(). This is insecure and will be removed in a future major version.
+
+1. Replace Cypress.env() calls with cy.env() (for sensitive values) or Cypress.expose() (for public configuration)
+2. Set allowCypressEnv: false in your Cypress configuration to disable Cypress.env()
+
+Learn more: https://on.cypress.io/cypress-env-migration
+
+
+====================================================================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:        15.21.1                                                                        │
+  │ Browser:        Electron 138 (headless)                                                        │
+  │ Node Version:   v24.16.0 (C:\Program Files\nodejs\node.exe)                                    │
+  │ Specs:          1 found (test_user_can_log_in_with_valid_credentials.cy.js)                    │
+  │ Searched:       D:\KumarFolder\mydocs\universal-test-framework\generated\test_user_can_log_in_ │
+  │                 with_valid_credentials.cy.js                                                   │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  test_user_can_log_in_with_valid_credentials.cy.js                               (1 of 1)
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-09-01T02:16:55.925Z",
+    "end": "2026-09-01T02:16:57.418Z",
+    "duration": 1493
+  },
+  "tests": [
+    {
+      "title": "runs",
+      "fullTitle": "User can log in with valid credentials runs",
+      "file": null,
+      "duration": 1414,
+      "currentRetry": 0,
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "runs",
+      "fullTitle": "User can log in with valid credentials runs",
+      "file": null,
+      "duration": 1414,
+      "currentRetry": 0,
+      "err": {}
+    }
+  ]
+}
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        1                                                                                │
+  │ Passing:      1                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     1 second                                                                         │
+  │ Spec Ran:     test_user_can_log_in_with_valid_credentials.cy.js                                │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+====================================================================================================
+
+  (Run Finished)
+
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped  
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ✔  test_user_can_log_in_with_valid_cre      00:01        1        1        -        -        - │
+  │    dentials.cy.js                                                                              │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    ✔  All specs passed!                        00:01        1        1        -        -        -  
+
